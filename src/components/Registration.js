@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 function Registration(props) {
     
     const registerSchema = Yup.object().shape({
-        username: Yup.string().required().min(3).max(25).matches(/^[a-z0-9]+$/i, "Username should contain alphabets and numbers only"),
+        username: Yup.string().required().min(4).max(25).matches(/^[a-z0-9]+$/i, "Username should contain alphabets and numbers only"),
         email: Yup.string().email().required(),
         password: Yup.string().required().min(8).matches( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         "It must Contain 8 Characters with One Uppercase, One Number and one special Character"
@@ -35,7 +35,6 @@ function Registration(props) {
             body: JSON.stringify({username, email, password})
           }); 
           const json = await response.json();
-          console.log(json);
           if (json.success){
             localStorage.setItem('token',json.authtoken);
             navigate("/login");

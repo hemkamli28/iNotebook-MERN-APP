@@ -5,8 +5,8 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fetchUser = require('../middleware/fetchUser');
+require('dotenv').config();
 
-const JWT_SECRET = "myname$isHemKamli";
 router.post('/createuser', 
 [
     body('username','Enter a valid Username').isLength({ min: 4 }),
@@ -40,8 +40,7 @@ try{
             id: user.id
         }
     }
-    console.log(JWT_SECRET);
-    const authToken = jwt.sign(data, JWT_SECRET);
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
     success = true;
     res.json({success, authToken})
   
@@ -84,8 +83,8 @@ router.post('/login', [
                 id: user.id
             }
         }
-        console.log(JWT_SECRET);
-        const authToken = jwt.sign(data, JWT_SECRET);
+        console.log(process.env.JWT_SECRET);
+        const authToken = jwt.sign(data, process.env.JWT_SECRET);
         success = true;
         res.json({success, authToken})
 
